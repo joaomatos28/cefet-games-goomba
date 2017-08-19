@@ -20,10 +20,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * 
  * @author fegemo
  */
+
 public class Game extends ApplicationAdapter {
 
     private SpriteBatch batch;
     private Texture[] mapLevelsTextures;
+    private static final int GOOMBA_HEIGHT = 24;
+    private static final int GOOMBA_WIDTH = 21;
+    int goomba_x =30;
+    int goomba_y =10;
+    //private Texture[] goomba;
+
+    
     
     /**
      * No método create colocamos código de inicialização do jogo. Por exemplo,
@@ -34,8 +42,10 @@ public class Game extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        mapLevelsTextures = new Texture[2];
+        mapLevelsTextures = new Texture[3];
         mapLevelsTextures[0] = new Texture("map-level-1.png");
+        mapLevelsTextures[1] = new Texture("goomba.png");
+        mapLevelsTextures[2] = new Texture("map-level-2.png");
 
         
         // cor de fundo da tela: branco
@@ -72,6 +82,8 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
+            batch.draw(mapLevelsTextures[2], 0, 0);
+            batch.draw(mapLevelsTextures[1], goomba_x, goomba_y);
 
         batch.end();
     }
@@ -90,8 +102,25 @@ public class Game extends ApplicationAdapter {
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+            if(goomba_x<Gdx.graphics.getWidth()-GOOMBA_WIDTH)
+                goomba_x+=1;    
+        }
+        if (Gdx.input.isKeyPressed(Keys.UP)) {
+            if(goomba_x<Gdx.graphics.getHeight()-GOOMBA_HEIGHT)    
+                goomba_y+=1;    
+        }
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+            if(goomba_x>0+GOOMBA_WIDTH)
+                goomba_x-=1;    
+        }
+        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+            if(goomba_y>0+GOOMBA_HEIGHT)
+                goomba_y-=1;    
+        }
 
         // ...
     }
     
 }
+
